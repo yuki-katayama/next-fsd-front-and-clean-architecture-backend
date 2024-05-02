@@ -7,3 +7,7 @@ export interface ITodoSchema {
 	title: string,
 	description: string
 }
+
+export const createDefaultData = (): IDatabase => ({
+	todos: []
+})

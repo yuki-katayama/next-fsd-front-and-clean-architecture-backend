@@ -6,10 +6,10 @@ import { useFormState } from "react-dom";
 import { createTodo, getTodo } from "./actions";
 
 const createTodoState: {
-  errors: null | unknown;
+  error: null | string;
   data: null | ICreateTodoDto;
 } = {
-  errors: null,
+  error: null,
   data: null,
 };
 
@@ -35,14 +35,7 @@ const Home = () => {
   }, []);
   return (
     <div>
-      {state.data !== null && (
-        <>
-          <div>{state.data.id}</div>
-          <div>{state.data.title}</div>
-          <div>{state.data.description}</div>
-        </>
-      )}
-      form
+      タスク管理リスト
       <form action={onSubmit}>
         <label
           className="block text-sm font-medium leading-6 text-gray-900"
@@ -72,6 +65,16 @@ const Home = () => {
         </label>
         <button type="submit">submit</button>
       </form>
+      {state.data !== null && (
+        <div className="">
+          <br/>
+          <br/>
+          <div>{state.data.id}</div>
+          <div>{state.data.title}</div>
+          <div>{state.data.description}</div>
+        </div>
+      )}
+      {state.error}
     </div>
   );
 };

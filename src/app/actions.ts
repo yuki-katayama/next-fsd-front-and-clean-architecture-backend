@@ -14,20 +14,21 @@ export const getTodo = async () => {
 }
 
 export const createTodo = async (_: any, formData: FormData) => {
-	const title = formData.get("todo-title");
-	const description = formData.get("todo-description");
+	const title = formData.get("todo-title") as string;
+	const description = formData.get("todo-description") as string;
 	try {
 		const todoController = new TodoController();
 		const todo = new Todo(new TodoId(null), new TodoTitle(title), new TodoDescription(description));
 		const result = await todoController.create(todo)
-		revalidatePath("/")
+		// revalidatePath("/")
 		return {
-			errors: null,
+			error: null,
 			data: result
 		}
-	} catch (err) {
+	} catch (err: any) {
+		console.error(err) // クライアント側のバリデーションなので、実際は必要ない
 		return {
-			errors: err,
+			error: err.message as string,
 			data: null,
 		}
 	}
