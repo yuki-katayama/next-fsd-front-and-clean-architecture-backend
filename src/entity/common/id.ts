@@ -2,7 +2,7 @@ export abstract class Id {
 	constructor(
 		protected readonly _value: string | null
 	){}
-	nullValidate () {
+	public nullValidate () {
 		if (this._value === null) {
 			throw new Error('値が null です')
 		}

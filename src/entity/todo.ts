@@ -1,3 +1,4 @@
+import { ITodoSchema } from "@/infrastructure";
 import { Id } from "./common";
 
 export class InvalidProductTitleError extends Error {
@@ -14,7 +15,7 @@ export class TodoId extends Id {
 	) {
 		super(_value)
 	}
-	get value() { return this._value; }
+	public get value() { return this._value; }
 }
 
 export class TodoTitle {
@@ -50,12 +51,15 @@ export class Todo {
 	get id() { return this._id.value}
 	get title() { return this._title.value}
 	get description() { return this._description.value}
+	get idObject() { return this._id }
 }
 
 export interface ITodoRepository {
 	findAll(): Promise<Todo[]>
 	find(id: TodoId): Promise<Todo>
+	delete(id: TodoId): Promise<Todo>
 	create(todo: Todo): Promise<Todo>
+	update(id: Todo): Promise<Todo>
 	// fetch(): Promise<Todo | null>
 	// update(todo: Todo): Promise<Todo>
 	// delete(id: TodoId): Promise<void>

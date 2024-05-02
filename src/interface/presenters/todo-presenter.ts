@@ -12,10 +12,24 @@ export interface ICreateTodoDto {
 	description: string
 }
 
+export interface IDeleteTodoDto {
+	id: string
+	title: string
+	description: string
+}
+
+export interface IUpdateTodoDto {
+	id: string
+	title: string
+	description: string
+}
+
 export interface ITodoDto {
 	todoToIGetTodoDtoMapper(todo: Todo): IGetTodoDto;
 	todosToIGetTodoDtoArrayMapper(todos: Todo[]): IGetTodoDto[];
 	todoToICreateTodoDtoMapper(todo: Todo): ICreateTodoDto;
+	todoToIDeleteTodoDtoMapper(todo: Todo): IDeleteTodoDto;
+	todoToIUpdateTodoDtoMapper(todo: Todo): IUpdateTodoDto;
 }
 
 export class TodoDto implements ITodoDto {
@@ -39,5 +53,11 @@ export class TodoDto implements ITodoDto {
 			title: todo.title,
 			description: todo.description,
 		}
+	}
+	public todoToIDeleteTodoDtoMapper(todo: Todo): IDeleteTodoDto {
+		return this.todoResponse(todo)
+	}
+	public todoToIUpdateTodoDtoMapper(todo: Todo): IUpdateTodoDto {
+		return this.todoResponse(todo)
 	}
 }
