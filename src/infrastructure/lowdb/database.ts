@@ -56,6 +56,13 @@ const initializeDb = async () => {
 	await db.write();
 }
 
+/**
+ * TODO: lowDBとの接続確認する手段がないかもしれない
+ */
+// const ensureDbConnection = async () => {
+// 	console.log(await db.adapter.read(), "adwadwa")
+// }
+
 
 // アプリケーションの起動時に一度だけデータベースを初期化
 initializeDb().then(() => {

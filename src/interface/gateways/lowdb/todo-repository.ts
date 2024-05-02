@@ -2,7 +2,6 @@ import { ITodoRepository, Todo, TodoDescription, TodoId, TodoTitle } from "@/ent
 import { IDatabase, ITodoSchema, db } from "@/infrastructure";
 import { randomUUID } from "crypto";
 import { Low } from 'lowdb'
-import { describe } from "node:test";
 
 export class TodoRepository implements ITodoRepository {
 	constructor(private readonly lowdb: Low<IDatabase> = db) {}
@@ -35,11 +34,12 @@ export class TodoRepository implements ITodoRepository {
 		return new Todo(new TodoId(uuid), new TodoTitle(newTodo.title), new TodoDescription(newTodo.description))
 	}
 	public async delete(id: TodoId): Promise<Todo> {
-		const todoSchema = db.data.todos.find(todo => todo.id === id.value)
-		if (!todoSchema) {
+		const idx = db.data.todos.findIndex(todo => todo.id === id.value)
+		if (idx === -1) {
 			throw new Error("対象のTodoがありません")
 		}
-		await db.update(data => data.todos.filter(todo => todo.id !== id.value))
+		const todoSchema = db.data.todos[idx]
+		await db.update(({todos}) => todos.splice(idx, 1))
 		return this.mapToTodo(todoSchema);
 	}
 	public async update(newTodo: Todo): Promise<Todo> {
@@ -52,9 +52,7 @@ export class TodoRepository implements ITodoRepository {
 			title: newTodo.title,
 			description: newTodo.description,
 		}
-		await db.update(data => {
-			data.todos[idx] = newTodoSchema
-		})
+		await db.update(({todos}) => todos[idx] = newTodoSchema)
 		return this.mapToTodo(newTodoSchema)
 	}
 }

@@ -1,7 +1,7 @@
 import { ITodoRepository, Todo, TodoDescription, TodoId, TodoTitle } from "@/entity";
 import { TodoRepository } from "../gateways/lowdb";
 import { ICreateTodoDto, IDeleteTodoDto, IGetTodoDto, ITodoDto, IUpdateTodoDto, TodoDto } from "../presenters";
-import { dbFileExists } from "@/infrastructure";
+import { dbFileExists, ensureDbConnection } from "@/infrastructure";
 import { ITodoUsecase, TodoUsecase } from "@/application";
 
 export class TodoController {
