@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import { ICreateTodoDto } from "@/interface";
 import { styles } from "./TodoCreateForm.css";
-import { handleTodoChange } from "@/app/utils";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 import SubmitButton from "@/app/components/elements/SubmitButton/SubmitButton";
+import FormInput from "../common/FormInput/FormInput";
 
 interface TodoCreateFormProps {
   createTodoAction(payload: FormData): void;
@@ -25,26 +24,22 @@ const TodoCreateForm: React.FC<TodoCreateFormProps> = ({
   return (
     <>
       <form action={createTodoAction} className={styles.form}>
-        <input
-          type="text"
-          name="create-todo-title"
-          placeholder="タイトル"
-          value={addTodo?.title}
-          onChange={(e) =>
-            handleTodoChange(setAddTodo, "title", addTodo, e.target.value)
-          }
-          className={styles.input}
-        />
-        <input
-          type="text"
-          name="create-todo-description"
-          placeholder="内容"
-          value={addTodo?.description}
-          onChange={(e) =>
-            handleTodoChange(setAddTodo, "description", addTodo, e.target.value)
-          }
-          className={styles.input}
-        />
+		<FormInput
+			action={setAddTodo}
+			todo={addTodo}
+			label="title"
+			placeholder="タイトル"
+			name="create-todo-title"
+			type="text"
+		/>
+		<FormInput
+			action={setAddTodo}
+			todo={addTodo}
+			label="description"
+			type="text"
+			name="create-todo-description"
+			placeholder="内容"
+		/>
         <Submit />
       </form>
     </>

@@ -82,9 +82,11 @@ export const deleteTodo = async (id: string) => {
   };
 
   export const updateTodo = async (_: any, formData: FormData) => {
+	console.log(formData)
 	const id = formData.get("update-todo-id") as string;
 	const title = formData.get("update-todo-title") as string;
 	const description = formData.get("update-todo-description") as string;
+	console.log(id, title, description)
 	try {
 		const todoController = new TodoController();
 		const todo = new Todo(new TodoId(id), new TodoTitle(title), new TodoDescription(description));

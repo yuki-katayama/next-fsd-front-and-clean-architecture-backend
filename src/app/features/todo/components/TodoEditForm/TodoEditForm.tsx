@@ -6,10 +6,13 @@ import { styles } from './TodoEditForm.css';
 import { handleTodoChange } from "@/app/utils";
 import { useFormStatus } from "react-dom";
 import SubmitButton from "@/app/components/elements/SubmitButton/SubmitButton";
+import FormInput from "../common/FormInput/FormInput";
+import CRUDButton from "../common/CRUDButton/CRUDButton";
 
 interface TodoEditFormProps {
   updateTodoAction (payload: FormData): void
   setEditTodo: React.Dispatch<React.SetStateAction<IUpdateTodoDto>>;
+  setIsEditTodo: React.Dispatch<React.SetStateAction<boolean>>;
   editTodo: IUpdateTodoDto
 }
 
@@ -21,45 +24,49 @@ const Submit = () => {
 const TodoEditForm: React.FC<TodoEditFormProps> = ({
   updateTodoAction,
   setEditTodo,
+  setIsEditTodo,
   editTodo
 }) => {
-  // const [todo, setTodo] = useState<ICreateTodoDto>(editTodo || { title: '', description: '' });
   return (
     <div className={styles.modalOverlay}>
       <form action={updateTodoAction} className={styles.modalContent}>
         <h2 className="text-lg">Todoを編集</h2>
-        <input
+        <FormInput
           required
+          action={setEditTodo}
+          todo={editTodo}
           type="hidden"
           name="update-todo-id"
-          value={editTodo.id}
-        />
-        <input
+          label="id"
+          />
+        <FormInput
           required
+          action={setEditTodo}
+          todo={editTodo}
+          label="title"
           type="text"
           name="update-todo-title"
-          value={editTodo.title}
-          onChange={(e) =>
-            handleTodoChange(setEditTodo, "title", editTodo, e.target.value)
-          }
-          className={styles.modalInput}
+          placeholder="タイトル"
+          customClassName={styles.modalInputTitle}
         />
-        <input
+        <FormInput
           required
+          action={setEditTodo}
+          todo={editTodo}
+          label="description"
           type="text"
           name="update-todo-description"
-          value={editTodo.description}
-          onChange={(e) =>
-            handleTodoChange(
-              setEditTodo,
-              "description",
-              editTodo,
-              e.target.value
-            )
-          }
-          className={styles.modalInputDesc}
+          placeholder="内容"
+          customClassName={styles.modalInputDesc}
         />
-        <Submit />
+        <div className={styles.modalEditButtons}>
+          <Submit />
+          <CRUDButton
+            value="閉じる"
+            action={() => setIsEditTodo(false)}
+            customClass={styles.modalCloseButton}
+          />
+        </div>
       </form>
     </div>
   );

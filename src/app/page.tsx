@@ -99,6 +99,7 @@ const Home = () => {
         <TodoEditForm
           updateTodoAction={updateTodoAction}
           setEditTodo={setEditTodo}
+          setIsEditTodo={setIsEditTodo}
           editTodo={editTodo}
         />
       )}
