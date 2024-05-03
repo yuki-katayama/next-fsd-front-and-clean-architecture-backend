@@ -1,7 +1,7 @@
 'use server'
 
 import { Todo, TodoDescription, TodoId, TodoTitle } from '@/entity';
-import { ICreateTodoDto, IGetTodoDto, TodoController } from '@/interface'
+import { IActionTodoDto, ICreateTodoDto, IGetTodoDto, TodoController, TodoDto } from '@/interface'
 // import { InitScenario, InitWebCommand } from '@panda-project/use-case'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from "next/cache";

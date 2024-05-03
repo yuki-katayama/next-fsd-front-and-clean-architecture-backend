@@ -1,7 +1,6 @@
-import { ITodoRepository, Todo, TodoDescription, TodoId, TodoTitle } from "@/entity";
+import { Todo, TodoId } from "@/entity";
 import { TodoRepository } from "../gateways/lowdb";
 import { ICreateTodoDto, IDeleteTodoDto, IGetTodoDto, ITodoDto, IUpdateTodoDto, TodoDto } from "../presenters";
-import { dbFileExists, ensureDbConnection } from "@/infrastructure";
 import { ITodoUsecase, TodoUsecase } from "@/application";
 
 export class TodoController {
@@ -19,10 +18,14 @@ export class TodoController {
 		return this.todoDto.todosToIGetTodoDtoArrayMapper(result)
 	}
 	public async create(todo: Todo): Promise<ICreateTodoDto> {
+		if (todo.id !== null) {
+			throw new Error("既に存在するtodoです")
+		}
 		const result = await this.todoUsecase.createTodo(todo)
 		return this.todoDto.todoToICreateTodoDtoMapper(result)
 	}
 	public async delete(id: TodoId): Promise<IDeleteTodoDto> {
+		id.nullValidate()
 		const result = await this.todoUsecase.deleteTodo(id)
 		return this.todoDto.todoToIDeleteTodoDtoMapper(result);
 	}

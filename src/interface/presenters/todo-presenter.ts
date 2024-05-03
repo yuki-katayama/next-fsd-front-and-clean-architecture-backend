@@ -1,27 +1,23 @@
 import { Todo } from "@/entity"
 
-export interface IGetTodoDto {
-	id: string
+export interface IActionTodoDto {
 	title: string
 	description: string
 }
+export interface IGetTodoDto extends IActionTodoDto {
+	id: string
+}
 
-export interface ICreateTodoDto {
+export interface ICreateTodoDto extends IActionTodoDto {
 	id: string | null
-	title: string
-	description: string
 }
 
-export interface IDeleteTodoDto {
+export interface IDeleteTodoDto extends IActionTodoDto {
 	id: string
-	title: string
-	description: string
 }
 
-export interface IUpdateTodoDto {
+export interface IUpdateTodoDto extends IActionTodoDto {
 	id: string
-	title: string
-	description: string
 }
 
 export interface ITodoDto {

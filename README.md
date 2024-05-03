@@ -43,7 +43,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 	* classに統一した
 * [ ] commandクラスを使用してはどうか。
 * [ ] reduxの導入
-* [ ] コンポーネントの分割
+	* [ ] まず、controller作成場所をサーバーに移す必要がある。
+* [x] コンポーネントの分割
 * [ ] Commandクラスが必要か精査
 * [ ] ストーリーブックの作成
 	* [ ] いろんなテストの作成
