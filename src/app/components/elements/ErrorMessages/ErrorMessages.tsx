@@ -10,8 +10,8 @@ const ErrorMessages: React.FC<ErrorMessagesProps> = ({ messages }) => {
 
     return (
       <ol className="my-1">
-        {messages.filter(message => message !== null).map(message => (
-          <div className={styles.container} role="alert">
+        {messages.filter(message => message !== null).map((message, index) => (
+          <div key={index} className={styles.container} role="alert">
             <strong className={styles.error}>エラー！</strong>
             <span className={styles.message}>{message}</span>
           </div>

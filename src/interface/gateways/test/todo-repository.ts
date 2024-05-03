@@ -1,6 +1,6 @@
 import { ITodoRepository, Todo, TodoDescription, TodoId, TodoTitle } from "@/entity";
 
-export class TodoRepository implements ITodoRepository {
+export class TodoRepository {
 	constructor() {}
 	public async find(id: TodoId): Promise<Todo> {
 		return new Todo(new TodoId("id"), new TodoTitle("title"), new TodoDescription("description"))
