@@ -39,5 +39,11 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 
 # 考慮する箇所
-* usecase todoは書くアクションのclassを作成する必要があるのか？
-* commandクラスを使用してはどうか。
+* [x] usecase todoは書くアクションのclassを作成する必要があるのか？
+	* classに統一した
+* [ ] commandクラスを使用してはどうか。
+* [ ] reduxの導入
+* [ ] コンポーネントの分割
+* [ ] Commandクラスが必要か精査
+* [ ] ストーリーブックの作成
+	* [ ] いろんなテストの作成
