@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-nextcleanarchitectur-dev-fb20f-authRole",
+      "UnauthRoleArn": "arn:aws:iam::065394252477:role/amplify-nextcleanarchitectur-dev-fb20f-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::065394252477:role/amplify-nextcleanarchitectur-dev-fb20f-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-nextcleanarchitectur-dev-fb20f-deployment",
+      "UnauthRoleName": "amplify-nextcleanarchitectur-dev-fb20f-unauthRole",
+      "StackName": "amplify-nextcleanarchitectur-dev-fb20f",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:065394252477:stack/amplify-nextcleanarchitectur-dev-fb20f/5700be50-0968-11ef-b634-0e475b115c21",
+      "AmplifyAppId": "d1x1w3t9iyi35"
+    },
+    "categories": {
+      "api": {
+        "nextcleanarchitectur": {}
+      }
+    }
+  }
+}

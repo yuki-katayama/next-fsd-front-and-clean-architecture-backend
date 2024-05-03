@@ -42,6 +42,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 * [x] usecase todoは書くアクションのclassを作成する必要があるのか？
 	* classに統一した
 * [ ] commandクラスを使用してはどうか。
+	* ユーザーインプットの形式がケースによって変わることがないので、今のところなし。
 * [ ] reduxの導入
 	* [ ] まず、controller作成場所をサーバーに移す必要がある。
 * [x] コンポーネントの分割

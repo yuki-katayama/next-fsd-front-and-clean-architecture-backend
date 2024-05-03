@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-amplify/adapter-nextjs": "^1.1.5",
     "@reduxjs/toolkit": "^2.2.3",
+    "aws-amplify": "^6.2.0",
     "lowdb": "^7.0.1",
     "next": "14.2.3",
     "react": "^18",
