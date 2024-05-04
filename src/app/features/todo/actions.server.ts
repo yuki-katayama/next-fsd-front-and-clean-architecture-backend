@@ -1,20 +1,24 @@
 'use server'
 
 import { Todo, TodoDescription, TodoId, TodoTitle } from '@/entity';
-import { IActionTodoDto, ICreateTodoDto, ITodoPresenterDto, TodoController, TodoDto } from '@/interface'
-// import { InitScenario, InitWebCommand } from '@panda-project/use-case'
+import { IActionTodoDto, ICreateTodoDto, ITodoPresenterDto, TodoController } from '@/interface'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from "next/cache";
 import { generateClient } from 'aws-amplify/api';
+import { TodoRepository } from '@/interface/gateways/lowdb';
+import { TodoUsecase } from '@/application';
 
-// import { z } from 'zod'
+const todoRepository = new TodoRepository()
+const todoUsecase = new TodoUsecase(todoRepository);
+const todoController = new TodoController(todoUsecase);
+
+
 export interface ITodoPresenterDtoAndError {
 	data: ITodoPresenterDto[];
 	error: null | string | string[];
 }
 
 export const findTodo = async (id: string) => {
-	const todoController = new TodoController();
 	try {
 		const todo: ITodoPresenterDto = await todoController.find(new TodoId(id))
 		return {
@@ -33,7 +37,6 @@ export const createTodo = async (_: any, formData: FormData) => {
 	const title = formData.get("create-todo-title")?.toString() ?? '';
 	const description = formData.get("create-todo-description")?.toString() ?? '';
 	try {
-		const todoController = new TodoController();
 		const todo = new Todo(new TodoId(null), new TodoTitle(title), new TodoDescription(description));
 		const result = await todoController.create(todo)
 		// revalidatePath("/")
@@ -54,7 +57,6 @@ export const deleteTodo = async (id: string) => {
 	try {
 	  // APIリクエストを想定
 	// const response = await fetch(`/api/todos/${id}`, { method: 'DELETE' });
-	const todoController = new TodoController();
 	const result = await todoController.delete(new TodoId(id))
 	  return {
 		error: null,
@@ -72,7 +74,6 @@ export const deleteTodo = async (id: string) => {
 	try {
 	  // APIリクエストを想定
 	//   const response = await fetch('/api/todos');
-	const todoController = new TodoController();
 	const result = await todoController.findAll();
 	return {
 		error: null,
@@ -97,7 +98,6 @@ export const deleteTodo = async (id: string) => {
 	const title = formData.get("update-todo-title") as string;
 	const description = formData.get("update-todo-description") as string;
 	try {
-		const todoController = new TodoController();
 		const todo = new Todo(new TodoId(id), new TodoTitle(title), new TodoDescription(description));
 		const result = await todoController.update(todo)
 		// revalidatePath("/")

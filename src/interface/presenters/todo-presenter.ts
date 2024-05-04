@@ -21,12 +21,12 @@ export interface IUpdateTodoDto extends IActionTodoDto {
 	id: string
 }
 
-export interface ITodoDto {
+export interface ITodoPresenter {
 	todoToITodoPresenterDtoMapper(todo: Todo): ITodoPresenterDto;
 	todoToITodoPresenterDtoArrayMapper(todos: Todo[]): ITodoPresenterDto[];
 }
 
-export class TodoDto implements ITodoDto {
+export class TodoPresenter implements ITodoPresenter {
 	constructor(){}
 	private todoToITodoMapper(todo: Todo): ITodoPresenterDto {
 		return {
