@@ -1,6 +1,6 @@
 import { Todo, TodoId } from "@/entity";
 import { ITodoPresenterDto } from "../presenters";
-import { ITodoUsecase, TodoUsecase } from "@/application";
+import { ITodoUsecase } from "@/application";
 
 export class TodoController {
 	constructor(

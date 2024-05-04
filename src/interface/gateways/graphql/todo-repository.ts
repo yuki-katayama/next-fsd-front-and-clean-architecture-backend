@@ -1,17 +1,16 @@
 import { ITodoRepository, Todo, TodoDescription, TodoId, TodoTitle } from "@/entity";
-import { cookiesClient } from "@/infrastructure";
 import * as mutations from '@/graphql/mutations';
 import * as queries from '@/graphql/queries';
 import {Todo as TodoGql} from "@/API"
 
 export class TodoRepository implements ITodoRepository {
-	constructor(private readonly amplifyClient = cookiesClient) {}
+	constructor(private readonly amplifyClient: any) {}
 	private mapToTodo(todo: TodoGql): Todo {
 		return new Todo(new TodoId(todo.id), new TodoTitle(todo.title), new TodoDescription(todo.description))
 	}
 	public async find(id: TodoId): Promise<Todo> {
 		try {
-			const { data, errors } = await cookiesClient.graphql({
+			const { data, errors } = await this.amplifyClient.graphql({
 				query: queries.getTodo,
 				variables: {
 					id: id.value!,
@@ -28,17 +27,16 @@ export class TodoRepository implements ITodoRepository {
 	}
 	public async findAll(): Promise<Todo[]> {
 		try {
-			const  { data } = await cookiesClient.graphql({
+			const  { data } = await this.amplifyClient.graphql({
 				query: queries.listTodos
 			})
 			return data.listTodos.items.map((todo: TodoGql) => this.mapToTodo(todo));
 		} catch (err: any) {
-			console.log("err")
 			throw new Error(err.errors.map((err: {message: string}) => err.message))
 		}
 	}
 	public async create(newTodo: Todo): Promise<Todo> {
-		const { data, errors } = await cookiesClient.graphql({
+		const { data, errors } = await this.amplifyClient.graphql({
 			query: mutations.createTodo,
 			variables: {
 				input: {
@@ -54,7 +52,7 @@ export class TodoRepository implements ITodoRepository {
 	}
 	public async delete(id: TodoId): Promise<Todo> {
 		try {
-			const { data, errors } = await cookiesClient.graphql({
+			const { data, errors } = await this.amplifyClient.graphql({
 				query: mutations.deleteTodo,
 				variables: {
 					input: {
@@ -72,7 +70,7 @@ export class TodoRepository implements ITodoRepository {
 	}
 	public async update(newTodo: Todo): Promise<Todo> {
 		try {
-			const { data, errors } = await cookiesClient.graphql({
+			const { data, errors } = await this.amplifyClient.graphql({
 				query: mutations.updateTodo,
 				variables: {
 					input: {

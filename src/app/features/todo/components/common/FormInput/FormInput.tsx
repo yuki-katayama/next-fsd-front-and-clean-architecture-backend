@@ -9,15 +9,11 @@ type Action<T> = Dispatch<SetStateAction<T>>;
  * typeがhiddenの場合のみlabelをnull
  */
 interface Props<T> extends InputHTMLAttributes<HTMLInputElement> {
-  action: Action<T>;
-  todo: T;
   label?: keyof T;
   customClassName?: string;
 }
 
 const FormInput = <T extends ICreateTodoDto | IUpdateTodoDto>({
-  action,
-  todo,
   label,
   customClassName,
   ...props
@@ -25,8 +21,6 @@ const FormInput = <T extends ICreateTodoDto | IUpdateTodoDto>({
   return (
     <input
       {...props}
-      value={(todo as any)[label]}
-      onChange={(e) => handleTodoChange(action, label!, todo, e.target.value)}
       className={`${styles.input} ${customClassName}`}
     />
   );

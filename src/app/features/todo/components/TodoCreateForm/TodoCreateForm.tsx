@@ -1,14 +1,12 @@
-import React from "react";
-import { ICreateTodoDto } from "@/interface";
+import React, { FormEvent, useRef } from "react";
 import { styles } from "./TodoCreateForm.css";
 import { useFormStatus } from "react-dom";
 import SubmitButton from "@/app/components/elements/SubmitButton/SubmitButton";
 import FormInput from "../common/FormInput/FormInput";
+import { useAppDispatch } from "@/app/store";
+import { createTodo } from "../../slicer/slicer";
 
 interface TodoCreateFormProps {
-  createTodoAction(payload: FormData): void;
-  addTodo: ICreateTodoDto;
-  setAddTodo: React.Dispatch<React.SetStateAction<ICreateTodoDto>>;
 }
 
 const Submit = () => {
@@ -17,27 +15,34 @@ const Submit = () => {
 }
 
 const TodoCreateForm: React.FC<TodoCreateFormProps> = ({
-  createTodoAction,
-  addTodo,
-  setAddTodo
 }) => {
+	const formRef = useRef<HTMLFormElement>(null);
+	const dispatch = useAppDispatch();
+	const handleCreate = async (event: FormEvent) => {
+		event.preventDefault();  // デフォルトのフォーム送信を防ぐ
+		const target = event.target as typeof event.target & {
+			title: { value: string };
+			description: { value: string };
+		};
+		const title = target.title.value;
+		const description = target.description.value;
+		await dispatch(createTodo({id: null, title, description}))
+		formRef.current?.reset();
+	}
   return (
     <>
-      <form action={createTodoAction} className={styles.form}>
+      <form ref={formRef} onSubmit={handleCreate} className={styles.form}>
 		<FormInput
-			action={setAddTodo}
-			todo={addTodo}
 			label="title"
 			placeholder="タイトル"
-			name="create-todo-title"
+			name="title"
 			type="text"
 		/>
 		<FormInput
-			action={setAddTodo}
-			todo={addTodo}
+			required
 			label="description"
 			type="text"
-			name="create-todo-description"
+			name="description"
 			placeholder="内容"
 		/>
         <Submit />

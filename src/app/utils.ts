@@ -3,7 +3,6 @@
    */
   export const handleTodoChange = <T extends { [key: string]: any }>(
     setter: React.Dispatch<React.SetStateAction<any>>,
-    // setter: React.Dispatch<React.SetStateAction<T>>, // TODO: IUpdateTodoDto | nullでnullを許容しないよう修正
     property: keyof T,
     todo: T,
     value: any

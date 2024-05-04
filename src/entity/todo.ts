@@ -1,4 +1,3 @@
-import { ITodoSchema } from "@/infrastructure";
 import { Id } from "./common";
 
 export class InvalidProductTitleError extends Error {
@@ -60,8 +59,4 @@ export interface ITodoRepository {
 	delete(id: TodoId): Promise<Todo>
 	create(todo: Todo): Promise<Todo>
 	update(id: Todo): Promise<Todo>
-	// fetch(): Promise<Todo | null>
-	// update(todo: Todo): Promise<Todo>
-	// delete(id: TodoId): Promise<void>
-	// findByTitleOrFail(name: TodoTitle): Promise<Todo>
 }

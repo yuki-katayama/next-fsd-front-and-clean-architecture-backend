@@ -1,16 +1,16 @@
 import { ITodoRepository, Todo, TodoDescription, TodoId, TodoTitle } from "@/entity";
-import { IDatabase, ITodoSchema, db } from "@/infrastructure";
+import { IDatabase, ITodoSchema } from "@/infrastructure/lowdb";
 import { randomUUID } from "crypto";
 import { Low } from 'lowdb'
 
 export class TodoRepository implements ITodoRepository {
-	constructor(private readonly lowdb: Low<IDatabase> = db) {}
+	constructor(private readonly lowdb: Low<IDatabase>) {}
 	private mapToTodo(todo: ITodoSchema): Todo {
 		return new Todo(new TodoId(todo.id), new TodoTitle(todo.title), new TodoDescription(todo.description))
 	}
 	public async find(id: TodoId): Promise<Todo> {
 		await this.lowdb.read();
-		const todoSchema = db.data.todos.find(todo => todo.id === id.value);
+		const todoSchema = this.lowdb.data.todos.find(todo => todo.id === id.value);
 		if (!todoSchema) {
 			throw new Error("対象のTodoがありません")
 		}
@@ -26,7 +26,7 @@ export class TodoRepository implements ITodoRepository {
 	}
 	public async create(newTodo: Todo): Promise<Todo> {
 		const uuid: string = randomUUID()
-		await db.update(data => data.todos.push({
+		await this.lowdb.update(data => data.todos.push({
 			id: uuid,
 			title: newTodo.title,
 			description: newTodo.description
@@ -34,16 +34,16 @@ export class TodoRepository implements ITodoRepository {
 		return new Todo(new TodoId(uuid), new TodoTitle(newTodo.title), new TodoDescription(newTodo.description))
 	}
 	public async delete(id: TodoId): Promise<Todo> {
-		const idx = db.data.todos.findIndex(todo => todo.id === id.value)
+		const idx = this.lowdb.data.todos.findIndex(todo => todo.id === id.value)
 		if (idx === -1) {
 			throw new Error("対象のTodoがありません")
 		}
-		const todoSchema = db.data.todos[idx]
-		await db.update(({todos}) => todos.splice(idx, 1))
+		const todoSchema = this.lowdb.data.todos[idx]
+		await this.lowdb.update(({todos}) => todos.splice(idx, 1))
 		return this.mapToTodo(todoSchema);
 	}
 	public async update(newTodo: Todo): Promise<Todo> {
-		const idx = db.data.todos.findIndex(todo => todo.id === newTodo.id)
+		const idx = this.lowdb.data.todos.findIndex(todo => todo.id === newTodo.id)
 		if (idx === -1) {
 			throw new Error("対象のTodoがありません")
 		}
@@ -52,7 +52,7 @@ export class TodoRepository implements ITodoRepository {
 			title: newTodo.title,
 			description: newTodo.description,
 		}
-		await db.update(({todos}) => todos[idx] = newTodoSchema)
+		await this.lowdb.update(({todos}) => todos[idx] = newTodoSchema)
 		return this.mapToTodo(newTodoSchema)
 	}
 }
