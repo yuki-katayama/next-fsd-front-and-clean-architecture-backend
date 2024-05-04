@@ -5,7 +5,7 @@ export interface IActionTodoDto {
 	description: string
 }
 
-export interface ITodoResponseDto extends IActionTodoDto {
+export interface ITodoPresenterDto extends IActionTodoDto {
 	id: string
 }
 
@@ -22,39 +22,23 @@ export interface IUpdateTodoDto extends IActionTodoDto {
 }
 
 export interface ITodoDto {
-	todoToITodoResponseDtoMapper(todo: Todo): ITodoResponseDto;
-	todoToITodoResponseDtoArrayMapper(todos: Todo[]): ITodoResponseDto[];
-	todoToICreateTodoDtoMapper(todo: Todo): ICreateTodoDto;
-	todoToIDeleteTodoDtoMapper(todo: Todo): IDeleteTodoDto;
-	todoToIUpdateTodoDtoMapper(todo: Todo): IUpdateTodoDto;
+	todoToITodoPresenterDtoMapper(todo: Todo): ITodoPresenterDto;
+	todoToITodoPresenterDtoArrayMapper(todos: Todo[]): ITodoPresenterDto[];
 }
 
 export class TodoDto implements ITodoDto {
 	constructor(){}
-	private todoResponse(todo: Todo): ITodoResponseDto {
+	private todoToITodoMapper(todo: Todo): ITodoPresenterDto {
 		return {
 			id: todo.id as string,
 			title: todo.title,
 			description: todo.description
 		}
 	}
-	public todoToITodoResponseDtoMapper(todo: Todo): ITodoResponseDto {
-		return this.todoResponse(todo)
+	public todoToITodoPresenterDtoMapper(todo: Todo): ITodoPresenterDto {
+		return this.todoToITodoMapper(todo)
 	}
-	public todoToITodoResponseDtoArrayMapper(todos: Todo[]): ITodoResponseDto[] {
-		return todos.map(todo => this.todoResponse(todo))
-	}
-	public todoToICreateTodoDtoMapper(todo: Todo): ICreateTodoDto {
-		return {
-			id: todo.id,
-			title: todo.title,
-			description: todo.description,
-		}
-	}
-	public todoToIDeleteTodoDtoMapper(todo: Todo): IDeleteTodoDto {
-		return this.todoResponse(todo)
-	}
-	public todoToIUpdateTodoDtoMapper(todo: Todo): IUpdateTodoDto {
-		return this.todoResponse(todo)
+	public todoToITodoPresenterDtoArrayMapper(todos: Todo[]): ITodoPresenterDto[] {
+		return todos.map(todo => this.todoToITodoMapper(todo))
 	}
 }

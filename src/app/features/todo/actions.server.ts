@@ -1,22 +1,22 @@
 'use server'
 
 import { Todo, TodoDescription, TodoId, TodoTitle } from '@/entity';
-import { IActionTodoDto, ICreateTodoDto, ITodoResponseDto, TodoController, TodoDto } from '@/interface'
+import { IActionTodoDto, ICreateTodoDto, ITodoPresenterDto, TodoController, TodoDto } from '@/interface'
 // import { InitScenario, InitWebCommand } from '@panda-project/use-case'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from "next/cache";
 import { generateClient } from 'aws-amplify/api';
 
 // import { z } from 'zod'
-export interface ITodoResponseDtoAndError {
-	data: ITodoResponseDto[];
+export interface ITodoPresenterDtoAndError {
+	data: ITodoPresenterDto[];
 	error: null | string | string[];
 }
 
 export const findTodo = async (id: string) => {
 	const todoController = new TodoController();
 	try {
-		const todo: ITodoResponseDto = await todoController.find(new TodoId(id))
+		const todo: ITodoPresenterDto = await todoController.find(new TodoId(id))
 		return {
 			error: null,
 			data: todo,

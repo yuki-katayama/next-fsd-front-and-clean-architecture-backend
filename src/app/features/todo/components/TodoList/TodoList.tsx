@@ -1,14 +1,14 @@
 // components/TodoList.tsx
 import React from "react";
-import { ITodoResponseDtoAndError, deleteTodo, findTodo } from "../../actions.server";
+import { ITodoPresenterDtoAndError, deleteTodo, findTodo } from "../../actions.server";
 import { styles } from "./TodoList.css";
 import CRUDButton from "../common/CRUDButton/CRUDButton";
 import { IUpdateTodoDto } from "@/interface";
 
 interface TodoListProps {
-  todos: ITodoResponseDtoAndError;
+  todos: ITodoPresenterDtoAndError;
   setEditTodo: React.Dispatch<React.SetStateAction<IUpdateTodoDto>>;
-  setTodos: React.Dispatch<React.SetStateAction<ITodoResponseDtoAndError>>;
+  setTodos: React.Dispatch<React.SetStateAction<ITodoPresenterDtoAndError>>;
   setIsEditTodo: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

@@ -2,13 +2,13 @@
 
 import {
   ICreateTodoDto,
-  ITodoResponseDto,
+  ITodoPresenterDto,
   IUpdateTodoDto,
 } from "@/interface";
 import React, { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import {
-  ITodoResponseDtoAndError,
+  ITodoPresenterDtoAndError,
   createTodo,
   findAllTodo,
   updateTodo,
@@ -33,7 +33,7 @@ const initTodoState = {
   description: "",
 };
 
-const initTodoGetState: ITodoResponseDtoAndError = {
+const initTodoGetState: ITodoPresenterDtoAndError = {
   data: [],
   error: null
 };
@@ -71,7 +71,7 @@ const Home = () => {
 
   useEffect(() => {
     setTodos({
-      data: createTodoState.data ? [...todos.data, createTodoState.data as ITodoResponseDto] : [],
+      data: createTodoState.data ? [...todos.data, createTodoState.data as ITodoPresenterDto] : [],
       error: createTodoState.error
     });
     reset();
@@ -81,7 +81,7 @@ const Home = () => {
     if (updateTodoState.data) {
       const updatedTodos = todos.data.map((todo) =>
         todo.id === editTodo?.id ? updateTodoState.data : todo
-      ) as ITodoResponseDto[];
+      ) as ITodoPresenterDto[];
       setTodos({
         data: updatedTodos,
         error: null
