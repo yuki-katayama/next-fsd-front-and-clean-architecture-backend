@@ -1,14 +1,14 @@
 // components/TodoList.tsx
 import React from "react";
-import { deleteTodo } from "../../actions";
-import { IGetTodoDto } from "@/interface"; // ToDoインターフェースをインポート
+import { ITodoResponseDtoAndError, deleteTodo, findTodo } from "../../actions.server";
 import { styles } from "./TodoList.css";
 import CRUDButton from "../common/CRUDButton/CRUDButton";
+import { IUpdateTodoDto } from "@/interface";
 
 interface TodoListProps {
-  todos: IGetTodoDto[];
-  setEditTodo: React.Dispatch<React.SetStateAction<IGetTodoDto>>;
-  setTodos: React.Dispatch<React.SetStateAction<IGetTodoDto[]>>;
+  todos: ITodoResponseDtoAndError;
+  setEditTodo: React.Dispatch<React.SetStateAction<IUpdateTodoDto>>;
+  setTodos: React.Dispatch<React.SetStateAction<ITodoResponseDtoAndError>>;
   setIsEditTodo: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -19,30 +19,50 @@ const TodoList: React.FC<TodoListProps> = ({
   setIsEditTodo,
 }) => {
   const handleDelete = async (id: string) => {
-    await deleteTodo(id);
-    setTodos(todos.filter((todo) => todo.id !== id));
+    const todo = await deleteTodo(id);
+    console.log(todo)
+    setTodos({
+      data: todo.data ? todos.data.filter((td) => td.id !== todo.data.id) : todos.data,
+      error: todo.error
+    });
   };
+
+  const handleGet = async (id: string) => {
+    const todo = await findTodo(id)
+    setTodos({
+      data: todos.data,
+      error: todo.error
+    });
+    console.log("todo get complete ", todo)
+  }
 
   return (
     <>
-      {todos.map((todo) => (
-        <div key={todo.id} className={styles.todoItem}>
+      {todos.data.map((td) => (
+        <div key={td.id} className={styles.todoItem}>
           <div>
-            <h3 className={styles.todoTitle}>{todo.title}</h3>
-            <p className={styles.todoDescription}>{todo.description}</p>
+            <h3 className={styles.todoTitle}>{td.title}</h3>
+            <p className={styles.todoDescription}>{td.description}</p>
           </div>
-          <div>
+          <div className={styles.todoButtons}>
+            <CRUDButton
+              value="取得"
+              action={() => {
+                handleGet(td.id);
+              }}
+              customClass={styles.todoGetButton}
+            />
             <CRUDButton
               value="編集"
               action={() => {
                 setIsEditTodo(true);
-                setEditTodo(todo);
+                setEditTodo(td);
               }}
               customClass={styles.todoEditButton}
             />
             <CRUDButton
               value="削除"
-              action={() => handleDelete(todo.id)}
+              action={() => handleDelete(td.id)}
               customClass={styles.todoCloseButton}
             />
           </div>

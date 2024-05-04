@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppDispatch } from '@/app/store';
 import { TodoController, IActionTodoDto } from '@/interface';
-import { findAllTodo } from './actions';
+import { findAllTodo } from './actions.server';
 
 export type TodosState = {
   data: IActionTodoDto[];

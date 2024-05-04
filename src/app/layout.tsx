@@ -6,6 +6,10 @@ import "./globals.css";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import {store} from "./store"
+import { Amplify } from 'aws-amplify';
+import config from '@/amplifyconfiguration.json';
+
+// Amplify.configure(config);
 
 const inter = Inter({ subsets: ["latin"] });
 

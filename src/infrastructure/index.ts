@@ -1,1 +1,2 @@
-export * from "./lowdb"
+export * from "./lowdb";
+export * from "./amplify";

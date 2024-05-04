@@ -1,6 +1,6 @@
 import { Todo, TodoId } from "@/entity";
 import { TodoRepository } from "../gateways/lowdb";
-import { ICreateTodoDto, IDeleteTodoDto, IGetTodoDto, ITodoDto, IUpdateTodoDto, TodoDto } from "../presenters";
+import { ICreateTodoDto, IDeleteTodoDto, ITodoDto, ITodoResponseDto, IUpdateTodoDto, TodoDto } from "../presenters";
 import { ITodoUsecase, TodoUsecase } from "@/application";
 
 export class TodoController {
@@ -8,30 +8,30 @@ export class TodoController {
 		private readonly todoDto: ITodoDto = new TodoDto(),
 		private readonly todoUsecase: ITodoUsecase = new TodoUsecase(new TodoRepository())
 	) {}
-	public async find(id: TodoId): Promise<IGetTodoDto>{
+	public async find(id: TodoId): Promise<ITodoResponseDto>{
 		id.nullValidate()
 		const result = await this.todoUsecase.getTodo(id)
-		return this.todoDto.todoToIGetTodoDtoMapper(result)
+		return this.todoDto.todoToITodoResponseDtoMapper(result)
 	}
 	public async findAll() {
 		const result = await this.todoUsecase.getTodoList()
-		return this.todoDto.todosToIGetTodoDtoArrayMapper(result)
+		return this.todoDto.todoToITodoResponseDtoArrayMapper(result)
 	}
-	public async create(todo: Todo): Promise<ICreateTodoDto> {
+	public async create(todo: Todo): Promise<ITodoResponseDto> {
 		if (todo.id !== null) {
 			throw new Error("既に存在するtodoです")
 		}
 		const result = await this.todoUsecase.createTodo(todo)
-		return this.todoDto.todoToICreateTodoDtoMapper(result)
+		return this.todoDto.todoToITodoResponseDtoMapper(result)
 	}
-	public async delete(id: TodoId): Promise<IDeleteTodoDto> {
+	public async delete(id: TodoId): Promise<ITodoResponseDto> {
 		id.nullValidate()
 		const result = await this.todoUsecase.deleteTodo(id)
-		return this.todoDto.todoToIDeleteTodoDtoMapper(result);
+		return this.todoDto.todoToITodoResponseDtoMapper(result);
 	}
-	public async update(todo: Todo): Promise<IUpdateTodoDto> {
+	public async update(todo: Todo): Promise<ITodoResponseDto> {
 		todo.idObject.nullValidate();
 		const result = await this.todoUsecase.updateTodo(todo)
-		return this.todoDto.todoToIUpdateTodoDtoMapper(result);
+		return this.todoDto.todoToITodoResponseDtoMapper(result);
 	}
 }

@@ -4,7 +4,8 @@ export interface IActionTodoDto {
 	title: string
 	description: string
 }
-export interface IGetTodoDto extends IActionTodoDto {
+
+export interface ITodoResponseDto extends IActionTodoDto {
 	id: string
 }
 
@@ -21,8 +22,8 @@ export interface IUpdateTodoDto extends IActionTodoDto {
 }
 
 export interface ITodoDto {
-	todoToIGetTodoDtoMapper(todo: Todo): IGetTodoDto;
-	todosToIGetTodoDtoArrayMapper(todos: Todo[]): IGetTodoDto[];
+	todoToITodoResponseDtoMapper(todo: Todo): ITodoResponseDto;
+	todoToITodoResponseDtoArrayMapper(todos: Todo[]): ITodoResponseDto[];
 	todoToICreateTodoDtoMapper(todo: Todo): ICreateTodoDto;
 	todoToIDeleteTodoDtoMapper(todo: Todo): IDeleteTodoDto;
 	todoToIUpdateTodoDtoMapper(todo: Todo): IUpdateTodoDto;
@@ -30,17 +31,17 @@ export interface ITodoDto {
 
 export class TodoDto implements ITodoDto {
 	constructor(){}
-	private todoResponse(todo: Todo): IGetTodoDto {
+	private todoResponse(todo: Todo): ITodoResponseDto {
 		return {
 			id: todo.id as string,
 			title: todo.title,
 			description: todo.description
 		}
 	}
-	public todoToIGetTodoDtoMapper(todo: Todo): IGetTodoDto {
+	public todoToITodoResponseDtoMapper(todo: Todo): ITodoResponseDto {
 		return this.todoResponse(todo)
 	}
-	public todosToIGetTodoDtoArrayMapper(todos: Todo[]): IGetTodoDto[] {
+	public todoToITodoResponseDtoArrayMapper(todos: Todo[]): ITodoResponseDto[] {
 		return todos.map(todo => this.todoResponse(todo))
 	}
 	public todoToICreateTodoDtoMapper(todo: Todo): ICreateTodoDto {
