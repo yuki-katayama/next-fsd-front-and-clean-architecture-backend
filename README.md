@@ -49,3 +49,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 * [ ] Commandクラスが必要か精査
 * [ ] ストーリーブックの作成
 	* [ ] いろんなテストの作成
+* [x] amplifyでgqlの導入
