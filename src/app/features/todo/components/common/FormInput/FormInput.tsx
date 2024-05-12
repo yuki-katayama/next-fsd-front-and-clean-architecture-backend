@@ -3,13 +3,11 @@ import { handleTodoChange } from '@/app/utils';
 import { ICreateTodoDto, IUpdateTodoDto } from '@/interface';
 import {styles} from './FormInput.css';  // CSS Module の利用
 
-type Action<T> = Dispatch<SetStateAction<T>>;
-
 /**
  * typeがhiddenの場合のみlabelをnull
  */
 interface Props<T> extends InputHTMLAttributes<HTMLInputElement> {
-  label?: keyof T;
+  label?: string;
   customClassName?: string;
 }
 
