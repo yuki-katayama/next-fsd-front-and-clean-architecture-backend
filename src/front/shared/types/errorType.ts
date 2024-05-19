@@ -1,0 +1,1 @@
+export type ErrorType = string | string[] | null
