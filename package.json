@@ -10,7 +10,8 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "test-storybook": "test-storybook",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_da65d50b0d94a23"
   },
   "dependencies": {
     "@aws-amplify/adapter-nextjs": "^1.1.5",
