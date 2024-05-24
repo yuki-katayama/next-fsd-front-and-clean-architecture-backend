@@ -6,7 +6,7 @@ import { ErrorMessages } from "@/front/shared/ui";
 import { findAllTodo } from "@/front/entities/todo/models/thunk";
 import { useAppDispatch, useAppSelector } from "@/front/shared/lib/store";
 import { selectTodoError, selectTodoEdit, selectTodos } from "@/front/entities/todo";
-import { TodoCreateForm } from "@/front/features/todo-create";
+import { TodoCreateForm } from "@/front/features/todo-create-form";
 import { TodoEditForm } from "@/front/features/todo-edit-form/ui/TodoEditForm";
 import { TodoList } from "@/front/widgets/todo-list";
 
