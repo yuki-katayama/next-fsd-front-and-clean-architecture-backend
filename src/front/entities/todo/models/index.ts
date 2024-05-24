@@ -12,4 +12,4 @@ export {
   updateTodo,
   findAllTodo,
 } from "./thunk";
-export { type ITodoState, type ITodo, type ICreateTodo } from "./types";
+export { type ITodoState, type ITodo } from "./types";

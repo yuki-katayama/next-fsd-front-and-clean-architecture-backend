@@ -7,12 +7,6 @@ export interface ITodo {
     readonly description: string
 }
 
-export interface ICreateTodo {
-    readonly id: string | null
-    readonly title: string
-    readonly description: string
-}
-
 export interface ITodoState {
     readonly allTodo: ITodo[]
 	readonly editTodo: ITodo | null

@@ -3,7 +3,6 @@ import React, { FormEvent, useRef } from "react";
 import { styles } from './TodoEditForm.css';
 import { useFormStatus } from "react-dom";
 import { selectTodoEdit, findAllTodo, setEditTodo, selectTodos, updateTodo, setEditTodoTitle, setEditTodoDescription } from "@/front/entities/todo";
-import { useSelector } from "react-redux";
 import { SubmitButton, TodoFormInput, TodoUpdateButton } from "@/front/shared/ui";
 import { useAppDispatch, useAppSelector } from "@/front/shared/lib/store";
 
@@ -18,7 +17,6 @@ const Submit = () => {
 export const TodoEditForm: React.FC<TodoEditFormProps> = ({}) => {
 	const formRef = useRef<HTMLFormElement>(null);
   const editTodo = useAppSelector(selectTodoEdit)
-  const select = useAppSelector(selectTodos);
   const dispatch = useAppDispatch()
 	const handleEdit = async (event: FormEvent) => {
 		event.preventDefault();  // デフォルトのフォーム送信を防ぐ
@@ -70,7 +68,8 @@ export const TodoEditForm: React.FC<TodoEditFormProps> = ({}) => {
           <Submit />
           <TodoUpdateButton
             value="閉じる"
-            action={() => dispatch(setEditTodo(null))}
+            actionType="update"
+            todo={null}
             customClass={styles.modalCloseButton}
           />
         </div>

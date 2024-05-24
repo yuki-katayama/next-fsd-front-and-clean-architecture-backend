@@ -5,15 +5,16 @@ import { styles } from "./TodoHome.css";
 import { ErrorMessages } from "@/front/shared/ui";
 import { findAllTodo } from "@/front/entities/todo/models/thunk";
 import { useAppDispatch, useAppSelector } from "@/front/shared/lib/store";
-import { selectTodoError, selectTodoEdit } from "@/front/entities/todo";
-import { TodoCreateForm } from "@/front/features/create-todo";
-import { TodoList } from "@/front/features/todo-list/TodoList";
-import { TodoEditForm } from "@/front/features/todo-edit-form/TodoEditForm";
+import { selectTodoError, selectTodoEdit, selectTodos } from "@/front/entities/todo";
+import { TodoCreateForm } from "@/front/features/todo-create";
+import { TodoEditForm } from "@/front/features/todo-edit-form/ui/TodoEditForm";
+import { TodoList } from "@/front/widgets/todo-list";
 
 export const TodoHome = () => {
   const dispatch = useAppDispatch()
   const error = useAppSelector(selectTodoError);
   const edit = useAppSelector(selectTodoEdit);
+  const todos = useAppSelector(selectTodos)
 
   useEffect(() => {
     const loadTodos = async () => {
@@ -30,7 +31,7 @@ export const TodoHome = () => {
       )}
 
       <TodoCreateForm />
-      <TodoList />
+      <TodoList todos={todos} />
       {edit && (
         <TodoEditForm />
       )}
